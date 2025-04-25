@@ -8,12 +8,12 @@ app.use(cors());
 dotenv.config();
 //Connect to Mongodb
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("connected to Mongo db"))
-  .catch((error) => console.log("Error in Connection",error));
- 
+    .connect(process.env.MONGODB_URI)
+    .then(() => console.log("connected to Mongo db"))
+    .catch((error) => console.log("Error in Connection", error));
+
 //Design Book Schema
-const BookSchema=new mongoose.Schema({
+const BookSchema = new mongoose.Schema({
     title: String,
     author: String,
     date: String,
@@ -21,18 +21,39 @@ const BookSchema=new mongoose.Schema({
 })
 
 // Design Book Model
-const Book=mongoose.model('MyBook',BookSchema)
+const Book = mongoose.model('MyBook', BookSchema)
 
-app.post('/books',async (req,res)=>{
+app.post('/books', async (req, res) => {
     try {
-    const newbook=new Book(req.body);
-    await newbook.save();
-    res.status(200).send('Book Added')
+        const newbook = new Book(req.body);
+        await newbook.save();
+        res.status(200).send('Book Added')
     } catch (error) {
         res.status(500).send('Sever Error')
     }
 })
+app.get('/books', async (req, res) => {
+    try {
+        const Books = await Book.find();
+        res.json(Books);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error')
+    }
+});
 
-app.listen(9000,()=>{
+app.get('/search', async (req, res) => {
+    const { title } = req.query;
+    try {
+        const books = await Book.find({ title: { $regex: title, $options: 'i' } }); // case-insensitive search
+        res.json(books);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+app.listen(9000, () => {
     console.log('Server is Running on port 9000')
 })
