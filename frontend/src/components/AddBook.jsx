@@ -13,7 +13,7 @@ const AddBook = () => {
         const book = { title, author, date, image };
 
         try {
-            await axios.post('http://localhost:9000/books', book);
+            await axios.post('https://book-app-0pon.onrender.com/books', book);
             alert("Book added successfully!");
         } catch (error) {
             alert("Error adding the book: " + error.message);
