@@ -1,0 +1,32 @@
+/* Style for the whole page */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Style for the navbar */
+nav {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;  /* Ensures the navbar stays on top */
+}
+
+/* Style for the whole container */
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    padding-top: 80px; /* Add space below navbar */
+    flex-direction: column; /* Align the content vertically */
+}
+
+/* Style*
